@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 14:45:39 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/10 18:24:31 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/03/11 15:42:43 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,19 +149,13 @@ int	parse_init_map(t_map *map, char *file)
 
 	len = 0;
 	if (!check_extension(file))
-	{
-		printf("Invalid extension\n");
-		return (0);
-	}
+		return (error_message("invalid extension", NULL, 0));
 	i = -1;
 	while (++i < 2)
 	{
 		fd = open(file, O_RDONLY);
 		if (fd == -1)
-		{
-			printf("%s\n", strerror(errno));
-			return (0);
-		}
+			return (error_message(strerror(errno), NULL, 0));
 		if (i == 0)
 			len = get_len(fd);
 		else

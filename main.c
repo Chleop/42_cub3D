@@ -3,51 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 14:45:30 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/10 17:52:53 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/03/11 15:53:03 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	free_string(char **string)
+// We need to initialize the structure in case the function returns before it is 
+// filled in (ex: wrong extension -> we will try to free map's variables and
+//  they are not initialized yet);
+void	init_map(t_map *map)
 {
-	if (*string)
-	{
-		free(*string);
-		*string = NULL;
-	}
-}
-
-void	ft_free(t_map *map)
-{
-	int i;
-
-	i = -1;
-	while (++i < 3)
-		map->floor[i] = 0;
-	free(map->floor);
-	while (++i < 3)
-		map->ceiling[i] = 0;
-	free(map->ceiling);
-	free_string(&map->no);
-	free_string(&map->so);
-	free_string(&map->we);
-	free_string(&map->ea);
+	map->no = NULL;
+	map->so = NULL;
+	map->we = NULL;
+	map->ea = NULL;
+	map->floor = 0;
+	map->ceiling = 0;
+	map->map = NULL;
 }
 
 int	main(int argc, char *argv[])
 {
 	t_map	map;
 	
+	init_map(&map);
 	if (argc != 2)
-	{
-		printf("Expected format: ./cub3D < mapfile.cub >\n");
-		return (1);
-	}
+		return (error_message("expected format: ./cub3D < mapfile.cub >", NULL, 1));
 	if (!parse_init_map(&map, argv[1]))
-		return (1);
-	ft_free(&map);
+	{
+		printf("ok now free\n");
+		// exit(0);
+		free_and_exit(&map, 1);
+	}
+	printf("ok now free\n");
+	// exit(0);
+	free_and_exit(&map, 0);
 }
