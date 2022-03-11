@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 14:45:39 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/11 16:10:36 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/03/11 17:03:05 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,15 @@ void	init_check_map(t_map *map, char *line, int fd, int size)
 	//parce que si oui, il faut aussi proteger tout les ft_substr en dessous,
 	//c'est beaucoup de code...
 	i = 0;
+	map->map[i] = line;
+	if ((ft_strchr(map->map[i], '\n')))
+		*(ft_strchr(map->map[i], '\n')) = '\0';
+	i++;
 	while (i < size)
 	{
-		map->map[i] = line;
-		free_string(&line);
-		line = get_next_line(fd);
+		map->map[i] = get_next_line(fd);
+		if ((ft_strchr(map->map[i], '\n')))
+			*(ft_strchr(map->map[i], '\n')) = '\0';
 		i++;
 	}
 	map->map[i] = NULL;
@@ -88,12 +92,12 @@ void	print_map(t_map *map)
 	i = 0;
 	while (map->map[i])
 	{
-		printf("Line: %s\n", map->map[i]);
+		printf("Line[%d]:	%s\n", i, map->map[i]);
 		i++;
 	}
 }
 
-void	get_map_data(t_map *map, int fd, int len)
+int	get_map_data(t_map *map, int fd, int len)
 {
 	char	*line;
 	int		i;
@@ -102,27 +106,34 @@ void	get_map_data(t_map *map, int fd, int len)
 	line = get_next_line(fd);
 	while (line)
 	{
-		if (!strncmp("NO ", line, 3))
-			map->no = get_path_texture(line);
-		else if (!strncmp("SO ", line, 3))
-			map->so = get_path_texture(line);
-		else if (!strncmp("WE ", line, 3))
-			map->we = get_path_texture(line);
-		else if (!strncmp("EA ", line, 3))
-			map->ea = get_path_texture(line);
-		else if (!strncmp("F ", line, 2))
-			map->floor = get_color(line);
-		else if (!strncmp("C ", line, 2))
-			map->ceiling = get_color(line);
-		else if (strncmp(line, "\n", 1))
-			break ;
+		if (strncmp(line, "\n", 1))
+		{
+			if (!map->no && !strncmp("NO ", line, 3))
+				map->no = get_path_texture(line);
+			else if (!map->so && !strncmp("SO ", line, 3))
+				map->so = get_path_texture(line);
+			else if (!map->we && !strncmp("WE ", line, 3))
+				map->we = get_path_texture(line);
+			else if (!map->ea && !strncmp("EA ", line, 3))
+				map->ea = get_path_texture(line);
+			else if (!map->floor && !strncmp("F ", line, 2))
+				map->floor = get_color(line);
+			else if (!map->ceiling && !strncmp("C ", line, 2))
+				map->ceiling = get_color(line);
+			else if (map->no && map->so && map->we && map->ea && map->floor && map->ceiling)
+			{
+				init_check_map(map, line, fd, len - i);
+				break;
+			}
+			else
+				return (0);
+		}
 		free_string(&line);
 		line = get_next_line(fd);
 		i++;
 	} 
 	//si le path n'existe pas mlx_xpm_file_to_image == NULL, on a pas a faire le check ici. :)
-	init_check_map(map, line, fd, len - i);
-	print_map(map);
+	return (1);
 }
 
 int	get_len(fd)
@@ -138,30 +149,30 @@ int	get_len(fd)
 		free_string(&line);
 		line = get_next_line(fd);
 	}
-	printf("len = %d\n", len);
 	return (len);
 }
 
 int	parse_init_map(t_map *map, char *file)
 {
 	int	fd;
-	int	i;
 	int	len;
 
 	len = 0;
 	if (!check_extension(file))
 		return (error_message("Invalid extension", NULL, 0));
-	i = -1;
-	while (++i < 2)
-	{
-		fd = open(file, O_RDONLY);
-		if (fd == -1)
-			return (error_message(strerror(errno), NULL, 0));
-		if (i == 0)
-			len = get_len(fd);
-		else
-			get_map_data(map, fd, len);
-		close(fd);
-	}
+	fd = open(file, O_RDONLY);
+	if (fd == -1)
+		return (error_message(strerror(errno), NULL, 0));
+	len = get_len(fd);
+	close(fd);
+	// c'est tres laid mais il faut open deux fois sinon line est a la fin du fichier
+	fd = open(file, O_RDONLY);
+	if (fd == -1)
+		return (error_message(strerror(errno), NULL, 0));
+	if (!get_map_data(map, fd, len))
+		return (error_message("We found invalid data in ", file, 0));
+	print_map(map);
+	close(fd);
+
 	return (1);
 }
