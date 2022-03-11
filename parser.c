@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 14:45:39 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/11 15:42:43 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/03/11 16:10:36 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	init_check_map(t_map *map, char *line, int fd, int size)
 
 	map->map = malloc(sizeof(char *) * size + 1);
 	if (map->map == NULL)
-		printf("malloc failed\n");
+		printf("Malloc failed\n");
 	//je me demande toujours si il faut proteger les mallocs avec un return (0) ou pas,
 	//parce que si oui, il faut aussi proteger tout les ft_substr en dessous,
 	//c'est beaucoup de code...
@@ -138,6 +138,7 @@ int	get_len(fd)
 		free_string(&line);
 		line = get_next_line(fd);
 	}
+	printf("len = %d\n", len);
 	return (len);
 }
 
@@ -149,7 +150,7 @@ int	parse_init_map(t_map *map, char *file)
 
 	len = 0;
 	if (!check_extension(file))
-		return (error_message("invalid extension", NULL, 0));
+		return (error_message("Invalid extension", NULL, 0));
 	i = -1;
 	while (++i < 2)
 	{
