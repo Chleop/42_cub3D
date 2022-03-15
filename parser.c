@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 14:45:39 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/15 18:40:33 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/03/15 18:49:21 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,13 @@ int	init_check_map(t_map *map, char *line, int fd)
 		width = ft_strlen(map->map[i]);
 		if (width > map->width)
 			map->width = width;
-		map->map[i] = realloc_line(map->map[i], map->width + 1);
 		line = get_next_line(fd);
 		i++;
 	}
 	map->map[i] = NULL;
+	i = -1;
+	while (map->map[++i])
+		map->map[i] = realloc_line(map->map[i], map->width + 1);
 	if (!check_map(map))
 		return (error_message("Invalid map", NULL, 0));
 	return (1);
