@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 14:45:58 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/15 15:29:53 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/03/15 15:34:01 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <errno.h>
 # include <fcntl.h>
 # include <string.h>
-# include <X11/keysym.h>
+# include "mlx.h"
 
 typedef struct s_map
 {
