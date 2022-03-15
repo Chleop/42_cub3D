@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 14:45:58 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/15 13:00:02 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/03/15 15:24:29 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <errno.h>
 # include <fcntl.h>
 # include <string.h>
+# include "mlx.h"
 
 typedef struct s_map
 {
