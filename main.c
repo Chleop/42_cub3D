@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 14:45:30 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/15 15:29:55 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/03/15 15:35:32 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	main(int argc, char *argv[])
 	t_player	player;
 	t_data		data;
 	
-	init_map(&map);
+	init_map(&player, &map);
 	if (argc != 2)
 		return (error_message("Expected format: ./cub3D < mapfile.cub >", NULL, 1));
 	if (!parse_init_map(&map, argv[1]))
