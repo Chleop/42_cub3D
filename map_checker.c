@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_checker.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 12:36:17 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/14 17:06:37 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/03/14 17:20:53 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	check_walls(t_map *map, int i, int j)
 {
 	printf("i %d j %d char %c\n", i, j, map->map[i][j]);
-	printf("H %d, w %d\n", map->height, map->width);
+	// printf("H %d, w %d\n", map->height, map->width);
 	if (i == 0 || i == map->height - 1)
 	{
 		if (!(map->map[i][j] == '1' || map->map[i][j] == ' '))
