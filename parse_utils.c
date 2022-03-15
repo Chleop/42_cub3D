@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 11:03:16 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/14 16:54:12 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/03/15 12:34:54 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,23 +75,21 @@ void	print_map(t_map *map)
 void	get_len(t_map *map, int fd)
 {
 	char	*line;
-	int		width;
 
 	line = get_next_line(fd);
 	while (line)
 	{
-		width = ft_strlen(line);
-		if (width > map->width)
-			map->width = width;
 		map->height++;
 		free_string(&line);
 		line = get_next_line(fd);
 	}
 }
 
-char	*ft_realloc(char *line, int size)
+char	*realloc_line(char *line, int size)
 {
 	char	*new_line;
+	int		i;
+	int		end;
 
 	new_line = ft_calloc(size, sizeof(char));
 	if (!new_line)
@@ -99,7 +97,18 @@ char	*ft_realloc(char *line, int size)
 		error_message("Malloc failed", NULL, 0);
 		return (NULL);
 	}
-	ft_strlcpy(new_line, line, ft_strlen(line));
+	i = 0;
+	end = ft_strlen(line);
+	while (i < end)
+	{
+		new_line[i] = line[i];
+		i++;
+	}
+	while (i < size - 1)
+	{
+		new_line[i] = ' ';
+		i++;
+	}
 	free_string(&line);
 	return (new_line);
 }

@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:09:23 by cproesch          #+#    #+#             */
-/*   Updated: 2022/03/14 16:57:16 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/03/15 11:28:59 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,23 @@ void	free_string(char **string)
 		free(*string);
 		*string = NULL;
 	}
+}
+
+void	ft_del_stringtab(char ***tab)
+{
+	int	i;
+
+	i = 0;
+	if (!*tab)
+		return ;
+	while ((*tab)[i])
+	{
+		if ((*tab)[i])
+			free_string(&(*tab)[i]);
+		i++;
+	}
+	free(*tab);
+	*tab = NULL;
 }
 
 void	ft_free_map(t_map *map)
@@ -48,13 +65,7 @@ void	ft_free_map(t_map *map)
 	if (map->ea)
 		free_string(&map->ea);
 	i = -1;
-	while (map->map[++i])
-	{
-		free_string(&map->map[i]);
-		map->map[i] = NULL;
-	}
-	free(map->map);
-	map->map = NULL;
+	ft_del_stringtab(&map->map);
 }
 
 void	free_and_exit(t_map *map, int exit_code)

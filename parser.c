@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 14:45:39 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/14 17:04:35 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/03/15 12:19:32 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 int	init_check_map(t_map *map, char *line, int fd)
 {
 	int	i;
+	int	width;
 
-	map->map = ft_calloc(map->height+ 1, sizeof(char *));
+	width = 0;
+	map->map = ft_calloc(map->height + 1, sizeof(char *));
 	if (map->map == NULL)
 		return(error_message("Malloc failed", NULL, 0));
 	i = 0;
@@ -25,7 +27,9 @@ int	init_check_map(t_map *map, char *line, int fd)
 		map->map[i] = line;
 		if ((ft_strchr(map->map[i], '\n')))
 			*(ft_strchr(map->map[i], '\n')) = '\0';
-		map->map[i] = ft_realloc(line, map->width + 1);
+		width = ft_strlen(map->map[i]);
+		if (width > map->width)
+			map->width = width;
 		line = get_next_line(fd);
 		i++;
 	}
@@ -76,7 +80,7 @@ int	get_map_data(t_map *map, int fd)
 	if (!(map->no && map->so && map->we && map->ea && map->floor
 		&& map->ceiling))
 		return (error_message("Map data missing", NULL, 0));
-	map->height-= i;
+	map->height -= i;
 	if (!init_check_map(map, line, fd))
 		return (0);
 	return (1);
@@ -98,7 +102,6 @@ int	parse_init_map(t_map *map, char *file)
 		return (error_message(strerror(errno), NULL, 0));
 	if (!get_map_data(map, fd))
 		return (0);
-	//print_map(map);
 	close(fd);
 	return (1);
 }

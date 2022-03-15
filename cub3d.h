@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 14:45:58 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/14 16:52:51 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/03/15 11:15:34 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,6 @@ int		*get_color(char *line);
 void	print_map(t_map *map);
 void	get_len(t_map *map, int fd);
 int		check_map(t_map *map);
-char	*ft_realloc(char *line, int size);
+char	*realloc_line(char *line, int size);
 
 #endif
