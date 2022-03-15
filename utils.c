@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:09:23 by cproesch          #+#    #+#             */
-/*   Updated: 2022/03/15 11:28:59 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/03/15 16:03:33 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,13 @@ void	ft_free_map(t_map *map)
 void	free_and_exit(t_map *map, int exit_code)
 {
 	ft_free_map(map);
+	if (map->data->win_ptr)
+		mlx_destroy_window(map->data->mlx_ptr, map->data->win_ptr);
+	if (map->data->mlx_ptr)
+	{
+		mlx_destroy_display(map->data->mlx_ptr);
+		free(map->data->mlx_ptr);
+	}
 	exit(exit_code);
 }
 

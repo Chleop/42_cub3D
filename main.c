@@ -6,13 +6,13 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 14:45:30 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/15 15:35:32 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/03/15 17:00:27 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	init_map(t_player *player, t_map *map)
+void	init_map(t_map *map)
 {
 	map->no = NULL;
 	map->so = NULL;
@@ -24,41 +24,40 @@ void	init_map(t_player *player, t_map *map)
 	map->floor = 0;
 	map->ceiling = 0;
 	map->map = NULL;
-	player->player_pos_X = 0;
-	player->player_pos_Y = 0;
-	player->view_dir_X = 0;
-	player->view_dir_Y = 0;
-	player->screen_plane_X = 0;
-	player->screen_plane_Y = 0;
-	player->point_on_plane_X = 0;
-	player->point_on_plane_Y = 0;
-	player->current_view_time = 0;
-	player->previous_view_time = 0;
+	map->player = malloc(1 * sizeof(t_player));
+	map->player->player_pos_X = 0;
+	map->player->player_pos_Y = 0;
+	map->player->view_dir_X = 0;
+	map->player->view_dir_Y = 0;
+	map->player->screen_plane_X = 0;
+	map->player->screen_plane_Y = 0;
+	map->player->point_on_plane_X = 0;
+	map->player->point_on_plane_Y = 0;
+	map->player->current_view_time = 0;
+	map->player->previous_view_time = 0;
+	map->data = malloc(1 * sizeof(t_data));
 }
 
-void 	init_window(t_data *data)
+void 	init_window(t_map *map)
 {
-	data->mlx_ptr = mlx_init();
-	if (!data->mlx_ptr)
+	map->data->mlx_ptr = mlx_init();
+	if (!map->data->mlx_ptr)
 		error_message("Mlx_init failed", NULL, 1);
-	data->win_ptr = mlx_new_window(data->mlx_ptr, 360, 360, "cub3D");
-	if (!data->win_ptr)
+	map->data->win_ptr = mlx_new_window(map->data->mlx_ptr, 1280, 1024, "cub3D");
+	if (!map->data->win_ptr)
 		error_message("Mlx_new_window failed", NULL, 1);
 }
 
 int	main(int argc, char *argv[])
 {
 	t_map		map;
-	t_player	player;
-	t_data		data;
 	
-	init_map(&player, &map);
+	init_map(&map);
 	if (argc != 2)
 		return (error_message("Expected format: ./cub3D < mapfile.cub >", NULL, 1));
 	if (!parse_init_map(&map, argv[1]))
 		free_and_exit(&map, 1);
-	init_window(&data);
-
-
+	init_window(&map);
+	display_game(&map);
 	free_and_exit(&map, 0);
 }

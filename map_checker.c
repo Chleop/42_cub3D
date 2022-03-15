@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 12:36:17 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/15 13:19:26 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/03/15 18:41:23 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,32 @@ int	check_walls(t_map *map, int i, int j)
 	return (1);
 }
 
+void	init_player(t_map *map, int i, int j)
+{
+	map->player->player_pos_X = (double)j;
+	map->player->player_pos_Y = (double)i;
+	if (map->player_direction == 'N')
+	{
+		map->player->view_dir_X = map->player->player_pos_X;
+		map->player->view_dir_Y = map->player->player_pos_Y - 1;
+	}
+	else if (map->player_direction == 'S')
+	{
+		map->player->view_dir_X = map->player->player_pos_X;
+		map->player->view_dir_Y = map->player->player_pos_Y + 1;
+	}
+	else if (map->player_direction == 'E')
+	{
+		map->player->view_dir_X = map->player->player_pos_X + 1;
+		map->player->view_dir_Y = map->player->player_pos_Y;
+	}
+	else if (map->player_direction == 'W')
+	{
+		map->player->view_dir_X = map->player->player_pos_X - 1;
+		map->player->view_dir_Y = map->player->player_pos_Y;
+	}
+}
+
 int	check_map(t_map *map)
 {
 	int	i;
@@ -40,7 +66,6 @@ int	check_map(t_map *map)
 	while (map->map[i])
 	{
 		j = 0;
-		map->map[i] = realloc_line(map->map[i], map->width + 1);
 		while (map->map[i][j])
 		{	
 			if (!strchr("10NESW ", map->map[i][j]))
@@ -51,8 +76,7 @@ int	check_map(t_map *map)
 				if (map->player_direction)
 					return (0);
 				map->player_direction = map->map[i][j];
-				map->player_x = j;
-				map->player_y = i;
+				init_player(map, i, j);
 			}
 			if (!check_walls(map, i, j))
 				return (0);

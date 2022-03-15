@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 11:03:16 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/15 12:34:54 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/03/15 18:42:12 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ char	*get_path_texture(char *line)
 		i++;
 	path = ft_strdup(&line[i]);
 	path[ft_strlen(path) - 1] = '\0';
+	free_string(&line);
 	return (path);
 }
 
@@ -109,6 +110,7 @@ char	*realloc_line(char *line, int size)
 		new_line[i] = ' ';
 		i++;
 	}
+	new_line[i] = '\0';
 	free_string(&line);
 	return (new_line);
 }
