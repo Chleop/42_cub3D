@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+         #
+#    By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/10 14:51:08 by avan-bre          #+#    #+#              #
-#    Updated: 2022/03/15 17:04:44 by cproesch         ###   ########.fr        #
+#    Updated: 2022/03/16 14:15:59 by avan-bre         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,8 +57,10 @@ endif
 #                                 FILES                                        #                                                            
 ################################################################################  
 
-SRCS	=	main.c parser.c utils.c parse_utils.c map_checker.c  display_game.c
-OBJS	=	$(SRCS:.c=.o)
+S_DIR	=	sources/
+SRCS	=	main.c parser.c exit_utils.c parse_utils.c map_checker.c \
+			display_game.c
+OBJS	=	$(addprefix $(S_DIR), $(SRCS:.c=.o))
 
 ################################################################################                                                            
 #                                 RULES                                        #                                                            
