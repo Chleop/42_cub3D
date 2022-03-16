@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 14:45:58 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/16 15:38:29 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/03/16 17:40:33 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,18 @@
 # include <errno.h>
 # include <fcntl.h>
 # include <string.h>
+# include <math.h>
 # include "mlx.h"
 
 # include <sys/types.h>
 # include <sys/wait.h>
+
+# define PIC_BACK "./images/back.xpm"
+# define PIC_WALL "./images/wall.xpm"
+// # define PIC_EXIT "./images/exit.xpm"
+// # define PIC_COLL "./images/coll.xpm"
+// # define PIC_PLAYER "./images/player.xpm"
+// # define PIC_MOUV "./images/mouv.xpm"
 
 enum e_enum
 {
@@ -31,7 +39,9 @@ enum e_enum
 	W = 119,
 	A = 97,
 	S = 115,
-	D = 100
+	D = 100,
+	RIGHT = 65363,
+	LEFT = 65361
 };
 
 typedef struct s_map
@@ -68,6 +78,8 @@ typedef struct s_data
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
+	void	*pic_back;
+	void	*pic_wall;
 }	t_data;
 
 //general

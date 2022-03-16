@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   exit_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:09:23 by cproesch          #+#    #+#             */
-/*   Updated: 2022/03/16 13:22:10 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/03/16 16:39:12 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,10 @@ void	ft_free_map(t_map *map)
 
 void	free_and_exit(t_map *map, int exit_code)
 {
+	if (map->data->pic_back)
+		mlx_destroy_image(map->data->mlx_ptr, map->data->pic_back);
+	if (map->data->pic_wall)
+		mlx_destroy_image(map->data->mlx_ptr, map->data->pic_wall);
 	if (map->data->win_ptr)
 		mlx_destroy_window(map->data->mlx_ptr, map->data->win_ptr);
 	if (map->data->mlx_ptr)

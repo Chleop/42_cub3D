@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_checker.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 12:36:17 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/16 15:38:27 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/03/16 17:23:26 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,21 @@ void	init_player(t_map *map, int i, int j)
 	if (map->player_direction == 'N')
 	{
 		map->player->view_dir_X = map->player->player_pos_X;
-		map->player->view_dir_Y = map->player->player_pos_Y - 1;
+		map->player->view_dir_Y = map->player->player_pos_Y - 10;
 	}
 	else if (map->player_direction == 'S')
 	{
 		map->player->view_dir_X = map->player->player_pos_X;
-		map->player->view_dir_Y = map->player->player_pos_Y + 1;
+		map->player->view_dir_Y = map->player->player_pos_Y + 10;
 	}
 	else if (map->player_direction == 'E')
 	{
-		map->player->view_dir_X = map->player->player_pos_X + 1;
+		map->player->view_dir_X = map->player->player_pos_X + 10;
 		map->player->view_dir_Y = map->player->player_pos_Y;
 	}
 	else if (map->player_direction == 'W')
 	{
-		map->player->view_dir_X = map->player->player_pos_X - 1;
+		map->player->view_dir_X = map->player->player_pos_X - 10;
 		map->player->view_dir_Y = map->player->player_pos_Y;
 	}
 }

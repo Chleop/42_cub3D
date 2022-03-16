@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 14:45:30 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/16 15:38:28 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/03/16 16:42:56 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void 	init_window(t_map *map)
 	map->data->mlx_ptr = mlx_init();
 	if (!map->data->mlx_ptr)
 		error_message("Mlx_init failed", NULL, 1);
-	map->data->win_ptr = mlx_new_window(map->data->mlx_ptr, 1280, 1024, "cub3D");
+	map->data->win_ptr = mlx_new_window(map->data->mlx_ptr, 60 * map->width, 60 * map->height, "cub3D");
 	if (!map->data->win_ptr)
 		error_message("Mlx_new_window failed", NULL, 1);
 }
