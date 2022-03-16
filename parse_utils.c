@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 11:03:16 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/15 18:42:12 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/03/16 13:22:31 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int	*get_color(char *line)
 		i++;
 	i++;
 	tab[2] = ft_atoi(&line[i]);
+	free_string(&line);
 	return (tab);
 }
 

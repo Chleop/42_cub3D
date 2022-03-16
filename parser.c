@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 14:45:39 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/16 12:58:28 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/03/16 13:22:50 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ int	get_map_data(t_map *map, int fd)
 		if (!get_map_info(map, line))
 			break ;
 		line = get_next_line(fd);
-		printf("lin pter = %p\n", line);
 		i++;
 	}
 	if (!(map->no && map->so && map->we && map->ea && map->floor

@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 14:45:30 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/16 12:27:28 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/03/16 13:26:16 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	init_map(t_map *map)
 	map->player->current_view_time = 0;
 	map->player->previous_view_time = 0;
 	map->data = malloc(1 * sizeof(t_data));
+	map->data->win_ptr = NULL;
+	map->data->mlx_ptr = NULL;
 }
 
 void 	init_window(t_map *map)
