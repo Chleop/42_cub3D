@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:09:23 by cproesch          #+#    #+#             */
-/*   Updated: 2022/03/15 16:03:33 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/03/16 12:30:46 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,18 @@ void	ft_free_map(t_map *map)
 		free_string(&map->we);
 	if (map->ea)
 		free_string(&map->ea);
+	if (map->player)
+		free(map->player);
+	if (map->data)
+		free(map->data);
+	map->player = NULL;
+	map->data = NULL;
 	i = -1;
 	ft_del_stringtab(&map->map);
 }
 
 void	free_and_exit(t_map *map, int exit_code)
 {
-	ft_free_map(map);
 	if (map->data->win_ptr)
 		mlx_destroy_window(map->data->mlx_ptr, map->data->win_ptr);
 	if (map->data->mlx_ptr)
@@ -78,6 +83,7 @@ void	free_and_exit(t_map *map, int exit_code)
 		mlx_destroy_display(map->data->mlx_ptr);
 		free(map->data->mlx_ptr);
 	}
+	ft_free_map(map);
 	exit(exit_code);
 }
 
