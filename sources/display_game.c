@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:45:32 by cproesch          #+#    #+#             */
-/*   Updated: 2022/03/17 13:46:59 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/03/17 16:26:58 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,16 @@ void	file_to_image(t_map *map)
 
 void	get_view_points(t_map *map)
 {
-	//printf("PX %f PY %f DX %f DY %f PLX %f PLY %f PRX %f PRY %F\n", map->player->plane_left_X, map->player->plane_left_Y, map->player->view_dir_X, map->player->view_dir_Y, map->player->plane_left_X, map->player->plane_left_Y, map->player->plane_right_X,map->player->plane_right_Y);
-	map->player->view_dir_X = map->player->player_pos_X + (map->player->len_camera * cos(map->player->player_angle));
-	map->player->view_dir_Y = map->player->player_pos_Y + (map->player->len_camera * sin(map->player->player_angle));
-	map->player->plane_right_X = map->player->player_pos_X + (map->player->len_camera * cos(map->player->player_angle + (11 * PI / 60)));
-	map->player->plane_right_Y = map->player->player_pos_Y + (map->player->len_camera * sin(map->player->player_angle + (11 * PI / 60)));
-	map->player->plane_left_X = map->player->player_pos_X + (map->player->len_camera * cos(map->player->player_angle - (11 * PI / 60)));
-	map->player->plane_left_Y = map->player->player_pos_Y + (map->player->len_camera * sin(map->player->player_angle - (11 * PI / 60)));
+	//printf("PX %f PY %f DX %f DY %f PLX %f PLY %f PRX %f PRY %F\n", map->player->plane_left_X, map->player->plane_left_Y, map->player->dir[0], map->player->dir[1], map->player->plane_left_X, map->player->plane_left_Y, map->player->plane_right_X,map->player->plane_right_Y);
+	map->player->dir[0] = map->player->pos[0] - (map->player->len_camera * cos(map->player->player_angle));
+	map->player->dir[1] = map->player->pos[1] - (map->player->len_camera * sin(map->player->player_angle));
+	map->player->plane_right_X = map->player->pos[0] - (map->player->len_camera * cos(map->player->player_angle + (11 * PI / 60)));
+	map->player->plane_right_Y = map->player->pos[1] - (map->player->len_camera * sin(map->player->player_angle + (11 * PI / 60)));
+	map->player->plane_left_X = map->player->pos[0] - (map->player->len_camera * cos(map->player->player_angle - (11 * PI / 60)));
+	map->player->plane_left_Y = map->player->pos[1] - (map->player->len_camera * sin(map->player->player_angle - (11 * PI / 60)));
+	// map->player->len_camera = (int)map->player->pos[1] - map->player->pos[1];
+	// //map->player->sideDistX = cos(map->player->player_angle) * ((int)map->player->pos[1] + 1) - map->player->pos[1];
+	// printf("PX %f PY %f intX %d intY %d\n", map->player->pos[0], map->player->pos[1], (int)map->player->pos[0] + 1, (int)map->player->pos[1] + 1);
 }
 
 void	rotate_right(t_map *map)
@@ -50,8 +53,8 @@ void	rotate_left(t_map *map)
 
 void	walk_in_direction(t_map *map, double angle)
 {
-	map->player->player_pos_X += (0.1 * cos(angle));
-	map->player->player_pos_Y += (0.1 * sin(angle));
+	map->player->pos[0] += (0.1 * cos(angle));
+	map->player->pos[1] += (0.1 * sin(angle));
 }
 
 int	key_event(int keypress, t_map *map)
@@ -59,13 +62,13 @@ int	key_event(int keypress, t_map *map)
 	if (keypress == ESC)
 		free_and_exit(map, 0);
 	if (keypress == W)
-		walk_in_direction(map, map->player->player_angle);
-	if (keypress == A)
-		walk_in_direction(map, map->player->player_angle + 3 * PI / 2);
-	if (keypress == S)
 		walk_in_direction(map, map->player->player_angle + PI);
-	if (keypress == D)
+	if (keypress == A)
 		walk_in_direction(map, map->player->player_angle + PI / 2);
+	if (keypress == S)
+		walk_in_direction(map, map->player->player_angle);
+	if (keypress == D)
+		walk_in_direction(map, map->player->player_angle + 3 * PI / 2);
 	if (keypress == RIGHT)
 		rotate_right(map);
 	if (keypress == LEFT)
@@ -111,7 +114,7 @@ int	player_funct(t_map *map)
 		x = 0;
 		while (x < 5)
 		{
-			mlx_pixel_put(map->data->mlx_ptr, map->data->win_ptr, map->player->player_pos_X * 60 + x, map->player->player_pos_Y * 60 + y, 0xFF0000);
+			mlx_pixel_put(map->data->mlx_ptr, map->data->win_ptr, map->player->pos[0] * 60 + x, map->player->pos[1] * 60 + y, 0xFF0000);
 			x++;
 		}
 		y++;
@@ -122,7 +125,7 @@ int	player_funct(t_map *map)
 		x = 0;
 		while (x < 5)
 		{
-			mlx_pixel_put(map->data->mlx_ptr, map->data->win_ptr, map->player->view_dir_X * 60 + x, map->player->view_dir_Y * 60 + y, 0xFF0000);
+			mlx_pixel_put(map->data->mlx_ptr, map->data->win_ptr, map->player->dir[0] * 60 + x, map->player->dir[1] * 60 + y, 0xFF0000);
 			x++;
 		}
 		y++;
@@ -149,6 +152,29 @@ int	player_funct(t_map *map)
 		}
 		y++;
 	}
+	// y = 0;
+	// while (y < 5)
+	// {
+	// 	x = 0;
+	// 	while (x < 5)
+	// 	{
+	// 		mlx_pixel_put(map->data->mlx_ptr, map->data->win_ptr, (int)map->player->pos[0] * 60 + x, map->player->len_camera * 60 + y, 0x006400);
+	// 		x++;
+	// 	}
+		
+	// 	y++;
+	// }
+	// y = 0;
+	// while (y < 5)
+	// {
+	// 	x = 0;
+	// 	while (x < 5)
+	// 	{
+	// 		mlx_pixel_put(map->data->mlx_ptr, map->data->win_ptr, map->player->plane_right_X * 60 + x, ((int)map->player->pos[0] + 1) * 60 + y, 0x006400);
+	// 		x++;
+	// 	}
+	// 	y++;
+	// }
 	return (0);
 }
 
