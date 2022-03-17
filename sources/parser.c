@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 14:45:39 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/16 15:38:25 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/03/17 17:46:49 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ int	init_check_map(t_map *map, char *line, int fd)
 	i = 0;
 	while (line)
 	{
-		map->map[i] = line;
-		if ((ft_strchr(map->map[i], '\n')))
-			*(ft_strchr(map->map[i], '\n')) = '\0';
-		width = ft_strlen(map->map[i]);
+		map->map[map->height - 1 - i] = line;
+		if ((ft_strchr(map->map[map->height - 1  - i], '\n')))
+			*(ft_strchr(map->map[map->height - 1  - i], '\n')) = '\0';
+		width = ft_strlen(map->map[map->height - 1  - i]);
 		if (width > map->width)
 			map->width = width;
 		line = get_next_line(fd);
