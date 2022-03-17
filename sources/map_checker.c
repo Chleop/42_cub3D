@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 12:36:17 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/17 10:18:35 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/03/17 13:33:29 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,33 +33,17 @@ int	check_walls(t_map *map, int i, int j)
 
 void	init_player(t_map *map, int i, int j)
 {
-	map->player->player_pos_X = (double)j;
-	map->player->player_pos_Y = (double)i;
-	map->player->len_camera = 10;
+	map->player->player_pos_X = (double)j + 0.5;
+	map->player->player_pos_Y = (double)i + 0.5;
+	map->player->len_camera = 2;
 	if (map->player_direction == 'N')
 		map->player->player_angle = (PI / 2);
-	// {
-	// 	map->player->view_dir_X = map->player->player_pos_X;
-	// 	map->player->view_dir_Y = map->player->player_pos_Y - 10;
-	// }
 	else if (map->player_direction == 'S')
 		map->player->player_angle = PI + PI / 2;
-	// {
-	// 	map->player->view_dir_X = map->player->player_pos_X;
-	// 	map->player->view_dir_Y = map->player->player_pos_Y + 10;
-	// }
 	else if (map->player_direction == 'E')
 		map->player->player_angle = 0;
-	// {
-	// 	map->player->view_dir_X = map->player->player_pos_X + 10;
-	// 	map->player->view_dir_Y = map->player->player_pos_Y;
-	// }
 	else if (map->player_direction == 'W')
 		map->player->player_angle = PI / 2;
-	// {
-	// 	map->player->view_dir_X = map->player->player_pos_X - 10;
-	// 	map->player->view_dir_Y = map->player->player_pos_Y;
-	// }
 	get_view_points(map);
 }
 

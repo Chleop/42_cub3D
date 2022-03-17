@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 14:45:58 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/17 10:18:49 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/03/17 13:45:06 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 
-# define PIC_BACK "./images/back.xpm"
-# define PIC_WALL "./images/wall.xpm"
+# define PIC_BACK "./images/bg.xpm"
+# define PIC_WALL "./images/wall2.xpm"
 # define PI 3.14159265358979323846
 
 enum e_enum
@@ -57,18 +57,25 @@ typedef struct s_map
 	struct s_data	*data;
 } t_map;
 
+typedef double	t_vector[2];
+
 typedef struct s_player
 {
+	//t_vector	pos;
+	//t_vector	dir;
 	double	player_pos_X;
 	double	player_pos_Y;
 	double	player_angle;
+//	double	plane = (11 * PI / 60);
 	double	len_camera;
 	double	view_dir_X;
 	double	view_dir_Y;
+	double	plane_left_X;
+	double	plane_left_Y;
+	double	plane_right_X;
+	double	plane_right_Y;
 	double	screen_plane_X;
 	double	screen_plane_Y;
-	double	point_on_plane_X;//cameraX
-	double	point_on_plane_Y;//cameraY
 	double	current_view_time;
 	double	previous_view_time;
 } t_player;

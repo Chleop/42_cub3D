@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 14:45:30 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/16 16:42:56 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/03/17 13:41:19 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,14 @@ void	init_struct(t_map *map)
 	map->player->player_pos_Y = 0;
 	map->player->view_dir_X = 0;
 	map->player->view_dir_Y = 0;
+	map->player->plane_left_X = 0;
+	map->player->plane_left_Y = 0;
+	map->player->plane_right_X = 0;
+	map->player->plane_right_Y = 0;
 	map->player->screen_plane_X = 0;
 	map->player->screen_plane_Y = 0;
-	map->player->point_on_plane_X = 0;
-	map->player->point_on_plane_Y = 0;
+	// map->player->point_on_plane_X = 0;
+	// map->player->point_on_plane_Y = 0;
 	map->player->current_view_time = 0;
 	map->player->previous_view_time = 0;
 	map->data = malloc(1 * sizeof(t_data));
