@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_checker.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 12:36:17 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/17 17:30:55 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/03/17 18:12:08 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ void	init_player(t_map *map, int i, int j)
 	map->player->pos[1] = (double)i + 0.5;
 	map->player->len_camera = 2;
 	if (map->player_direction == 'N')
-		map->player->player_angle = (PI / 2);
-	else if (map->player_direction == 'S')
 		map->player->player_angle = PI + PI / 2;
+	else if (map->player_direction == 'S')
+		map->player->player_angle = (PI / 2);
 	else if (map->player_direction == 'E')
-		map->player->player_angle = 0;
-	else if (map->player_direction == 'W')
 		map->player->player_angle = PI / 2;
+	else if (map->player_direction == 'W')
+		map->player->player_angle = 0;
 	get_view_points(map);
 }
 
