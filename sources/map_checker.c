@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 12:36:17 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/17 13:33:29 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/03/17 13:50:21 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ int	check_walls(t_map *map, int i, int j)
 
 void	init_player(t_map *map, int i, int j)
 {
-	map->player->player_pos_X = (double)j + 0.5;
-	map->player->player_pos_Y = (double)i + 0.5;
+	map->player->pos[0] = (double)j + 0.5;
+	map->player->pos[1] = (double)i + 0.5;
 	map->player->len_camera = 2;
 	if (map->player_direction == 'N')
 		map->player->player_angle = (PI / 2);

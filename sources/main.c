@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 14:45:30 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/17 13:41:19 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/03/17 15:47:48 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,12 @@ void	init_struct(t_map *map)
 	map->ceiling = 0;
 	map->map = NULL;
 	map->player = malloc(1 * sizeof(t_player));
-	map->player->player_pos_X = 0;
-	map->player->player_pos_Y = 0;
-	map->player->view_dir_X = 0;
-	map->player->view_dir_Y = 0;
+	map->player->pos[0] = 0;
+	map->player->pos[1] = 0;
+	map->player->dir[0] = 0;
+	map->player->dir[1] = 0;
+	map->player->sideDistX = 0;
+	map->player->sideDistY = 0;
 	map->player->plane_left_X = 0;
 	map->player->plane_left_Y = 0;
 	map->player->plane_right_X = 0;

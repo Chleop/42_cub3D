@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 14:45:58 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/17 13:45:06 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/03/17 15:45:23 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,17 @@ typedef double	t_vector[2];
 
 typedef struct s_player
 {
-	//t_vector	pos;
-	//t_vector	dir;
-	double	player_pos_X;
-	double	player_pos_Y;
+	t_vector	pos;
+	t_vector	dir;
+	// double	player_pos_X;
+	// double	player_pos_Y;
 	double	player_angle;
-//	double	plane = (11 * PI / 60);
+	// double	plane = (11 * PI / 60);
 	double	len_camera;
-	double	view_dir_X;
-	double	view_dir_Y;
+	// double	view_dir_X;
+	// double	view_dir_Y;
+	double	sideDistX;
+	double	sideDistY;
 	double	plane_left_X;
 	double	plane_left_Y;
 	double	plane_right_X;
