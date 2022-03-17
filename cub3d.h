@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 14:45:58 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/16 17:40:33 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/03/17 10:18:49 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,7 @@
 
 # define PIC_BACK "./images/back.xpm"
 # define PIC_WALL "./images/wall.xpm"
-// # define PIC_EXIT "./images/exit.xpm"
-// # define PIC_COLL "./images/coll.xpm"
-// # define PIC_PLAYER "./images/player.xpm"
-// # define PIC_MOUV "./images/mouv.xpm"
+# define PI 3.14159265358979323846
 
 enum e_enum
 {
@@ -64,6 +61,8 @@ typedef struct s_player
 {
 	double	player_pos_X;
 	double	player_pos_Y;
+	double	player_angle;
+	double	len_camera;
 	double	view_dir_X;
 	double	view_dir_Y;
 	double	screen_plane_X;
@@ -100,5 +99,6 @@ char	*realloc_line(char *line, int size);
 
 //game display
 void	display_game(t_map *map);
+void	get_view_points(t_map *map);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display_game.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:45:32 by cproesch          #+#    #+#             */
-/*   Updated: 2022/03/16 17:56:23 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/03/17 10:23:49 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,57 +21,54 @@ void	file_to_image(t_map *map)
 	h = 45;
 	map->data->pic_back = mlx_xpm_file_to_image(map->data->mlx_ptr, PIC_BACK, &w, &h);
 	map->data->pic_wall = mlx_xpm_file_to_image(map->data->mlx_ptr, PIC_WALL, &w, &h);
-	// map->data->pic_exit = mlx_xpm_file_to_image(map->data->mlx_ptr, PIC_EXIT, w, h);
-	// if (!map->data->pic_exit)
-	// 	error_message("Error\nMlx_xpm_file_to_image exit failed\n", data);
-	// map->data->pic_coll = mlx_xpm_file_to_image(map->data->mlx_ptr, PIC_COLL, w, h);
-	// if (!map->data->pic_coll)
-	// 	error_message("Error\nMlx_xpm_file_to_image coll failed\n", data);
-	// map->data->pic_player = mlx_xpm_file_to_image(map->data->mlx_ptr, PIC_PLAYER, w, h);
-	// if (!map->data->pic_player)
-	// 	error_message("Error\nMlx_xpm_file_to_image player failed\n", data);
+}
+
+void	get_view_points(t_map *map)
+{
+	map->player->view_dir_X = map->player->player_pos_X + (map->player->len_camera * cos(map->player->player_angle * (PI/2)));
+	map->player->view_dir_Y = map->player->player_pos_Y + (map->player->len_camera * sin(map->player->player_angle * (PI/2)));
 }
 
 void	rotate_right(t_map *map)
 {
-	double	oldDirX;
-	double	rotSpeed;
+	map->player->player_angle += 0.2;
+	get_view_points(map);
+}
 
-	oldDirX = map->player->view_dir_X;
-	rotSpeed = 0.02;
-	map->player->view_dir_X = map->player->view_dir_X * cos(-rotSpeed) - map->player->view_dir_Y * sin(-rotSpeed);
-    map->player->view_dir_Y = oldDirX * sin(-rotSpeed) + map->player->view_dir_Y * cos(-rotSpeed);
+void	rotate_left(t_map *map)
+{
+	map->player->player_angle -= 0.2;
+	get_view_points(map);
 }
 
 int	key_event(int keypress, t_map *map)
 {
-	printf("keypress = %d\n", keypress);
 	if (keypress == ESC)
 		free_and_exit(map, 0);
 	if (keypress == W)
 	{
 		map->player->player_pos_Y = map->player->player_pos_Y - 1;
-		map->player->view_dir_Y = map->player->view_dir_Y -1;
+		//map->player->view_dir_Y = map->player->view_dir_Y - 1;
 	}
 	if (keypress == A)
 	{
 		map->player->player_pos_X = map->player->player_pos_X - 1 ;
-		map->player->view_dir_X = map->player->view_dir_X -1;
+		//map->player->view_dir_X = map->player->view_dir_X - 1;
 	}
 	if (keypress == S)
 	{
 		map->player->player_pos_Y = map->player->player_pos_Y + 1;
-		map->player->view_dir_Y = map->player->view_dir_Y + 1;
+		//map->player->view_dir_Y = map->player->view_dir_Y + 1;
 	}
 	if (keypress == D)
 	{
 		map->player->player_pos_X = map->player->player_pos_X + 1;
-		map->player->view_dir_X = map->player->view_dir_X + 1;
+		//map->player->view_dir_X = map->player->view_dir_X + 1;
 	}
 	if (keypress == RIGHT)
 		rotate_right(map);
-	// if (keypress == LEFT)
-	// 	rotate_left(map);
+	if (keypress == LEFT)
+		rotate_left(map);
 
 	return (0);
 }
