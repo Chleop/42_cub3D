@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/03/19 19:08:47 by avan-bre          #+#    #+#              #
+#    Updated: 2022/03/19 19:17:57 by avan-bre         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 SRCS	= ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c \
 ft_isdigit.c ft_isprint.c ft_memset.c ft_strlen.c ft_tolower.c \
 ft_toupper.c ft_memcpy.c ft_memccpy.c ft_memmove.c ft_memchr.c \
@@ -8,7 +20,8 @@ ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_strmapi.c ft_itoa.c \
 get_next_line_utils.c get_next_line.c printf/ft_printf.c \
 printf/print_char.c printf/print_hex.c \
 printf/print_int.c printf/print_hex_cap.c printf/print_ptr.c \
-printf/print_string.c printf/print_uns_int.c $(SRCS_B)
+printf/print_string.c printf/print_uns_int.c free_string.c \
+ft_del_stringtab.c error_message.c $(SRCS_B)
 
 SRCS_B	= ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c \
 ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c

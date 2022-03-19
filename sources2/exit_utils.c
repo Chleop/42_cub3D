@@ -5,37 +5,26 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/11 15:09:23 by cproesch          #+#    #+#             */
-/*   Updated: 2022/03/19 19:14:20 by avan-bre         ###   ########.fr       */
+/*   Created: 2022/03/19 18:58:16 by avan-bre          #+#    #+#             */
+/*   Updated: 2022/03/19 19:17:22 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	free_string(char **string)
+void	ft_free_game(t_game *game)
 {
-	if (*string)
+	if (game->pic_back)
+		mlx_destroy_image(game->mlx_ptr, game->pic_back);
+	if (game->pic_wall)
+		mlx_destroy_image(game->mlx_ptr, game->pic_wall);
+	if (game->win_ptr)
+		mlx_destroy_window(game->mlx_ptr, game->win_ptr);
+	if (game->mlx_ptr)
 	{
-		free(*string);
-		*string = NULL;
+		mlx_destroy_display(game->mlx_ptr);
+		free(game->mlx_ptr);
 	}
-}
-
-void	ft_del_stringtab(char ***tab)
-{
-	int	i;
-
-	i = 0;
-	if (!*tab)
-		return ;
-	while ((*tab)[i])
-	{
-		if ((*tab)[i])
-			free_string(&(*tab)[i]);
-		i++;
-	}
-	free(*tab);
-	*tab = NULL;
 }
 
 void	ft_free_map(t_map *map)
@@ -64,40 +53,27 @@ void	ft_free_map(t_map *map)
 		free_string(&map->we);
 	if (map->ea)
 		free_string(&map->ea);
-	if (map->player)
-		free(map->player);
-	if (map->data)
-		free(map->data);
-	map->player = NULL;
-	map->data = NULL;
-	i = -1;
 	ft_del_stringtab(&map->map);
 }
 
-void	free_and_exit(t_map *map, int exit_code)
+void	free_and_exit(t_data *data, int exit_code)
 {
-	if (map->data->pic_back)
-		mlx_destroy_image(map->data->mlx_ptr, map->data->pic_back);
-	if (map->data->pic_wall)
-		mlx_destroy_image(map->data->mlx_ptr, map->data->pic_wall);
-	if (map->data->win_ptr)
-		mlx_destroy_window(map->data->mlx_ptr, map->data->win_ptr);
-	if (map->data->mlx_ptr)
+	if (data->game)
 	{
-		mlx_destroy_display(map->data->mlx_ptr);
-		free(map->data->mlx_ptr);
+		ft_free_game(data->game);
+		free(data->game);
+		data->game = NULL;
 	}
-	ft_free_map(map);
+	if (data->player)
+	{
+		free(data->player);
+		data->player = NULL;
+	}
+	if (data->map)
+	{
+		ft_free_map(data->map);
+		free(data->map);
+		data->map = NULL;
+	}
 	exit(exit_code);
-}
-
-int	error_message(char *string, char *name, int code)
-{
-	ft_printf("Error : ", 2);
-	if (name)
-		ft_printf("%s: %s", 2, string, name);
-	else
-		ft_printf("%s", 2, string);
-	ft_printf("\n", 2);
-	return (code);
 }
