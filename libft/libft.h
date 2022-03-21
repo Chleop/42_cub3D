@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 14:58:08 by user42            #+#    #+#             */
-/*   Updated: 2022/02/01 10:32:28 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/03/19 19:17:49 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,8 @@ char			*ft_strjoing(char *s1, char *s2);
 char			*ft_del(char *str);
 char			*ft_substrg(char *s, int start, int len);
 char			*get_next_line(int fd);
+void			free_string(char **string);
+void			ft_del_stringtab(char ***tab);
+int				error_message(char *string, char *name, int code);
 
 #endif

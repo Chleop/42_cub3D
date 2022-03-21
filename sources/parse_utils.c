@@ -5,24 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/14 11:03:16 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/16 15:38:25 by avan-bre         ###   ########.fr       */
+/*   Created: 2022/03/21 10:50:21 by avan-bre          #+#    #+#             */
+/*   Updated: 2022/03/21 13:12:21 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-int	check_extension(char *file)
-{
-	int		i;
-
-	i = ft_strlen(file);
-	while (i > 0 && file[i] != '.')
-		i--;
-	if (ft_strncmp(".cub\0", &file[i], 5))
-		return (0);
-	return (1);
-}
 
 char	*get_path_texture(char *line)
 {

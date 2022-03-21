@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 18:49:29 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/21 15:52:33 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/03/19 19:13:46 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 
-# define PIC_BACK "./images/floor.xpm"
-# define PIC_WALL "./images/wall3.xpm"
+# define PIC_BACK "../images/floor.xpm"
+# define PIC_WALL "../images/wall3.xpm"
 # define PI 3.14159265358979323846
 
 enum e_enum
@@ -45,20 +45,18 @@ typedef struct s_game
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
-	void	*floor_tile;
-	void	*wall_tile;
+	void	*pic_back;
+	void	*pic_wall;
 }	t_game;
 
 typedef struct s_player
 {
-	int			set;
 	t_vector	pos;
 	t_vector	dir;
 	t_vector	nextX;
 	t_vector	nextY;
 	double		angle;
 	double		plane;
-	double		dist;
 	double		sdX;
 	double		sdY;
 	double		ddX;
@@ -91,19 +89,5 @@ void	free_and_exit(t_data *data, int exit_code);
 int		error_message(char *string, char *name, int code);
 void	free_string(char **string);
 void	ft_free_map(t_map *map);
-
-//parser
-int		parse_init_map(t_map *map, char *file);
-char	*get_path_texture(char *line);
-int		*get_color(char *line);
-void	print_map(t_map *map);
-void	get_len(t_map *map, int fd);
-char	*realloc_line(char *line, int size);
-int		check_map_init_player(t_data *data);
-
-//game play
-void	init_game(t_data *data);
-int		key_event(int keypress, t_data *data);
-void	get_view_points(t_player *player);
 
 #endif

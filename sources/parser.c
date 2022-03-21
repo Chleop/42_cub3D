@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/10 14:45:39 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/17 18:03:50 by avan-bre         ###   ########.fr       */
+/*   Created: 2022/03/21 10:43:41 by avan-bre          #+#    #+#             */
+/*   Updated: 2022/03/21 15:49:50 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	init_check_map(t_map *map, char *line, int fd)
+int	get_map(t_map *map, char **line, int fd)
 {
 	int	i;
 	int	width;
@@ -20,29 +20,27 @@ int	init_check_map(t_map *map, char *line, int fd)
 	width = 0;
 	map->map = ft_calloc(map->height + 1, sizeof(char *));
 	if (map->map == NULL)
-		return(error_message("Malloc failed", NULL, 0));
+		return (error_message("Malloc failed", NULL, 0));
 	i = 0;
-	while (line)
+	while (*line)
 	{
-		map->map[map->height - 1 - i] = line;
+		map->map[map->height - 1 - i] = *line;
 		if ((ft_strchr(map->map[map->height - 1 - i], '\n')))
 			*(ft_strchr(map->map[map->height - 1 - i], '\n')) = '\0';
 		width = ft_strlen(map->map[map->height - 1 - i]);
 		if (width > map->width)
 			map->width = width;
-		line = get_next_line(fd);
+		*line = get_next_line(fd);
 		i++;
 	}
 	map->map[i] = NULL;
 	i = -1;
 	while (map->map[++i])
 		map->map[i] = realloc_line(map->map[i], map->width + 1);
-	if (!check_map(map))
-		return (error_message("Invalid map", NULL, 0));
 	return (1);
 }
 
-int	get_map_info(t_map *map, char *line)
+int	get_data_line(t_map *map, char *line)
 {
 	if (strncmp(line, "\n", 1))
 	{
@@ -66,33 +64,44 @@ int	get_map_info(t_map *map, char *line)
 	return (1);
 }
 
-int	get_map_data(t_map *map, int fd)
+int	get_map_data(t_map *map, char **line, int fd)
 {
-	char	*line;
 	int		i;
 
 	i = 0;
-	line = get_next_line(fd);
-	while (line)
+	*line = get_next_line(fd);
+	while (*line)
 	{
-		if (!get_map_info(map, line))
+		if (!get_data_line(map, *line))
 			break ;
-		line = get_next_line(fd);
+		*line = get_next_line(fd);
 		i++;
 	}
 	if (!(map->no && map->so && map->we && map->ea && map->floor
-		&& map->ceiling))
+			&& map->ceiling))
 		return (error_message("Map data missing", NULL, 0));
 	map->height -= i;
-	if (!init_check_map(map, line, fd))
+	return (1);
+}
+
+int	check_extension(char *file)
+{
+	int		i;
+
+	i = ft_strlen(file);
+	while (i > 0 && file[i] != '.')
+		i--;
+	if (ft_strncmp(".cub\0", &file[i], 5))
 		return (0);
 	return (1);
 }
 
 int	parse_init_map(t_map *map, char *file)
 {
-	int	fd;
+	int		fd;
+	char	*line;
 
+	line = NULL;
 	if (!check_extension(file))
 		return (error_message("Invalid extension", NULL, 0));
 	fd = open(file, O_RDONLY);
@@ -103,7 +112,7 @@ int	parse_init_map(t_map *map, char *file)
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 		return (error_message(strerror(errno), NULL, 0));
-	if (!get_map_data(map, fd))
+	if (!get_map_data(map, &line, fd) || !get_map(map, &line, fd))
 		return (0);
 	close(fd);
 	return (1);
