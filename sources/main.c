@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/10 14:45:30 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/19 19:12:44 by avan-bre         ###   ########.fr       */
+/*   Created: 2022/03/19 18:42:02 by avan-bre          #+#    #+#             */
+/*   Updated: 2022/03/21 16:12:27 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	init_struct(t_map *map)
+void	init_map_struct(t_map *map)
 {
 	map->no = NULL;
 	map->so = NULL;
@@ -20,52 +20,53 @@ void	init_struct(t_map *map)
 	map->ea = NULL;
 	map->height = 0;
 	map->width = 0;
-	map->player_direction = 0;
 	map->floor = 0;
 	map->ceiling = 0;
 	map->map = NULL;
-	map->player = malloc(1 * sizeof(t_player));
-	map->player->pos[0] = 0;
-	map->player->pos[1] = 0;
-	map->player->dir[0] = 0;
-	map->player->dir[1] = 0;
-	map->player->sideDistX = 0;
-	map->player->sideDistY = 0;
-	map->player->plane_left_X = 0;
-	map->player->plane_left_Y = 0;
-	map->player->plane_right_X = 0;
-	map->player->plane_right_Y = 0;
-	map->player->screen_plane_X = 0;
-	map->player->screen_plane_Y = 0;
-	// map->player->point_on_plane_X = 0;
-	// map->player->point_on_plane_Y = 0;
-	map->player->current_view_time = 0;
-	map->player->previous_view_time = 0;
-	map->data = malloc(1 * sizeof(t_data));
-	map->data->win_ptr = NULL;
-	map->data->mlx_ptr = NULL;
 }
 
-void 	init_window(t_map *map)
+void	init_player_struct(t_player *player)
 {
-	map->data->mlx_ptr = mlx_init();
-	if (!map->data->mlx_ptr)
-		error_message("Mlx_init failed", NULL, 1);
-	map->data->win_ptr = mlx_new_window(map->data->mlx_ptr, 60 * map->width, 60 * map->height, "cub3D");
-	if (!map->data->win_ptr)
-		error_message("Mlx_new_window failed", NULL, 1);
+	player->angle = 100;
+	player->dist = 2;
+	player->plane = 11 * PI / 60;
+}
+
+void	init_game_struct(t_game *game)
+{
+	game->mlx_ptr = NULL;
+	game->win_ptr = NULL;
+	game->floor_tile = NULL;
+	game->wall_tile = NULL;
+}
+
+int	init_structures(t_data *data)
+{
+	data->game = malloc(1 * sizeof(t_game));
+	data->player = malloc(1 * sizeof(t_player));
+	data->map = malloc(1 * sizeof(t_map));
+	if (!data->game || !data->player || !data->map)
+		return (error_message("Malloc failed", NULL, 1));
+	init_game_struct(data->game);
+	init_player_struct(data->player);
+	init_map_struct(data->map);
+	return (1);
 }
 
 int	main(int argc, char *argv[])
 {
-	t_map		map;
-	
+	t_data	data;
+
 	if (argc != 2)
-		return (error_message("Expected format: ./cub3D < mapfile.cub >", NULL, 1));
-	init_struct(&map);
-	if (!parse_init_map(&map, argv[1]))
-		free_and_exit(&map, 1);
-	init_window(&map);
-	display_game(&map);
-	free_and_exit(&map, 0);
+		return (error_message("Expected format: ./cub3D < mapfile.cub >", 
+				NULL, 1));
+	if (!init_structures(&data))
+		free_and_exit(&data, 1);
+	if (!parse_init_map(data.map, argv[1]))
+		free_and_exit(&data, 1);
+	if (!check_map_init_player(&data))
+		free_and_exit(&data, 1);
+//	print_map(data.map);
+	init_game(&data);
+	free_and_exit(&data, 0);
 }

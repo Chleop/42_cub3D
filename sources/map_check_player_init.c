@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_checker.c                                      :+:      :+:    :+:   */
+/*   map_check_player_init.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 12:36:17 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/17 18:12:08 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/03/21 16:12:52 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,51 +31,46 @@ int	check_walls(t_map *map, int i, int j)
 	return (1);
 }
 
-void	init_player(t_map *map, int i, int j)
+int	get_player_data(t_player *player, int i, int j, char direction)
 {
-	map->player->pos[0] = (double)j + 0.5;
-	map->player->pos[1] = (double)i + 0.5;
-	map->player->len_camera = 2;
-	if (map->player_direction == 'N')
-		map->player->player_angle = PI + PI / 2;
-	else if (map->player_direction == 'S')
-		map->player->player_angle = (PI / 2);
-	else if (map->player_direction == 'E')
-		map->player->player_angle = PI / 2;
-	else if (map->player_direction == 'W')
-		map->player->player_angle = 0;
-	get_view_points(map);
+	player->pos[0] = (double)j + 0.5;
+	player->pos[1] = (double)i + 0.5;
+	if (direction == 'N')
+		player->angle = PI / 2;
+	else if (direction == 'S')
+		player->angle = PI + PI / 2;
+	else if (direction == 'E')
+		player->angle = 0;
+	else if (direction == 'W')
+		player->angle = PI;
+	return (1);
 }
 
-int	check_map(t_map *map)
+int	check_map_init_player(t_data *data)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (map->map[i])
+	while (data->map->map[i])
 	{
 		j = 0;
-		while (map->map[i][j])
+		while (data->map->map[i][j])
 		{	
-			if (!strchr("10NESW ", map->map[i][j]))
-				return (0);
-			if (map->map[i][j] == 'N' || map->map[i][j] == 'E'
-				|| map->map[i][j] == 'W' || map->map[i][j] == 'S')
+			if (!strchr("10NESW ", data->map->map[i][j]))
+				return (error_message("Invalid map", NULL, 0));
+			if (strchr("NEWS", data->map->map[i][j]))
 			{
-				if (map->player_direction)
-					return (0);
-				map->player_direction = map->map[i][j];
-				init_player(map, i, j);
+				if (!get_player_data(data->player, i, j, data->map->map[i][j]))
+					return (error_message("Invalid map", NULL, 0));
 			}
-			if (!check_walls(map, i, j))
-				return (0);
+			if (!check_walls(data->map, i, j))
+				return (error_message("Invalid map", NULL, 0));
 			j++;
 		}
 		i++;
 	}
-	if (!map->player_direction)
-		return (0);
+	if (data->player->angle > 2 * PI)
+		return (error_message("Invalid map", NULL, 0));
 	return (1);
 }
-

@@ -5,24 +5,22 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/10 14:45:58 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/19 18:55:12 by avan-bre         ###   ########.fr       */
+/*   Created: 2022/03/19 18:49:29 by avan-bre          #+#    #+#             */
+/*   Updated: 2022/03/21 15:52:33 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include "libft.h"
-# include "mlx.h"
+# include "../libft/libft.h"
+# include "../mlx/mlx.h"
 # include <unistd.h>
 # include <stdio.h>
 # include <errno.h>
 # include <fcntl.h>
 # include <string.h>
 # include <math.h>
-# include "mlx.h"
-
 # include <sys/types.h>
 # include <sys/wait.h>
 
@@ -41,6 +39,33 @@ enum e_enum
 	LEFT = 65361
 };
 
+typedef double	t_vector[2];
+
+typedef struct s_game
+{
+	void	*mlx_ptr;
+	void	*win_ptr;
+	void	*floor_tile;
+	void	*wall_tile;
+}	t_game;
+
+typedef struct s_player
+{
+	int			set;
+	t_vector	pos;
+	t_vector	dir;
+	t_vector	nextX;
+	t_vector	nextY;
+	double		angle;
+	double		plane;
+	double		dist;
+	double		sdX;
+	double		sdY;
+	double		ddX;
+	double		ddY;
+
+}	t_player;
+
 typedef struct s_map
 {
 	char			*no;
@@ -49,65 +74,36 @@ typedef struct s_map
 	char			*ea;
 	int				height;
 	int				width;
-	int				player_direction;
 	int				*floor;
 	int				*ceiling;
 	char			**map;
-	struct s_player	*player;
-	struct s_data	*data;
-} t_map;
-
-typedef double	t_vector[2];
-
-typedef struct s_player
-{
-	t_vector	pos;
-	t_vector	dir;
-	t_vector	nextX;
-	t_vector	nextY;
-	double	player_angle;
-	// double	plane = (11 * PI / 60);
-	double	len_camera;
-	double	sideDistX;
-	double	sideDistY;
-	double	deltaDistX;
-	double	deltaDistY;
-	double	plane_left_X;
-	double	plane_left_Y;
-	double	plane_right_X;
-	double	plane_right_Y;
-	double	screen_plane_X;
-	double	screen_plane_Y;
-	double	current_view_time;
-	double	previous_view_time;
-} t_player;
+}	t_map;
 
 typedef struct s_data
 {
-	void	*mlx_ptr;
-	void	*win_ptr;
-	void	*pic_back;
-	void	*pic_wall;
+	t_game		*game;
+	t_player	*player;
+	t_map		*map;
 }	t_data;
 
-//general
+//exit and free functions
+void	free_and_exit(t_data *data, int exit_code);
+int		error_message(char *string, char *name, int code);
 void	free_string(char **string);
 void	ft_free_map(t_map *map);
-void	free_and_exit(t_map *map, int exit_code);
-int		error_message(char *string, char *name, int code);
 
-//parsing
+//parser
 int		parse_init_map(t_map *map, char *file);
-int		check_extension(char *file);
 char	*get_path_texture(char *line);
 int		*get_color(char *line);
 void	print_map(t_map *map);
 void	get_len(t_map *map, int fd);
-int		check_map(t_map *map);
 char	*realloc_line(char *line, int size);
+int		check_map_init_player(t_data *data);
 
-//game display
-void	display_game(t_map *map);
-void	get_view_points(t_map *map);
+//game play
+void	init_game(t_data *data);
+int		key_event(int keypress, t_data *data);
+void	get_view_points(t_player *player);
 
 #endif
