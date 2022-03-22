@@ -3,14 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 10:43:41 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/21 15:49:50 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/03/22 16:36:53 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+// int	get_map(t_map *map, char **line, int fd)
+// {
+// 	int	i;
+// 	int	width;
+
+// 	width = 0;
+// 	map->map = ft_calloc(map->height + 1, sizeof(char *));
+// 	if (map->map == NULL)
+// 		return (error_message("Malloc failed", NULL, 0));
+// 	i = 0;
+// 	while (*line)
+// 	{
+// 		map->map[map->height - 1 - i] = *line;
+// 		if ((ft_strchr(map->map[map->height - 1 - i], '\n')))
+// 			*(ft_strchr(map->map[map->height - 1 - i], '\n')) = '\0';
+// 		width = ft_strlen(map->map[map->height - 1 - i]);
+// 		if (width > map->width)
+// 			map->width = width;
+// 		*line = get_next_line(fd);
+// 		i++;
+// 	}
+// 	map->map[i] = NULL;
+// 	i = -1;
+// 	while (map->map[++i])
+// 		map->map[i] = realloc_line(map->map[i], map->width + 1);
+// 	return (1);
+// }
 
 int	get_map(t_map *map, char **line, int fd)
 {
@@ -24,10 +52,10 @@ int	get_map(t_map *map, char **line, int fd)
 	i = 0;
 	while (*line)
 	{
-		map->map[map->height - 1 - i] = *line;
-		if ((ft_strchr(map->map[map->height - 1 - i], '\n')))
-			*(ft_strchr(map->map[map->height - 1 - i], '\n')) = '\0';
-		width = ft_strlen(map->map[map->height - 1 - i]);
+		map->map[i] = *line;
+		if ((ft_strchr(map->map[i], '\n')))
+			*(ft_strchr(map->map[i], '\n')) = '\0';
+		width = ft_strlen(map->map[i]);
 		if (width > map->width)
 			map->width = width;
 		*line = get_next_line(fd);
@@ -115,5 +143,6 @@ int	parse_init_map(t_map *map, char *file)
 	if (!get_map_data(map, &line, fd) || !get_map(map, &line, fd))
 		return (0);
 	close(fd);
+	print_map(map);
 	return (1);
 }

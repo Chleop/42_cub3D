@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 18:49:29 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/21 19:13:28 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/03/22 17:30:06 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,6 @@ int		check_map_init_player(t_data *data);
 //game play
 void	init_game(t_data *data);
 int		key_event(int keypress, t_data *data);
-void	get_view_points(t_player *player);
+void	get_view_points(t_data *data);
 
 #endif

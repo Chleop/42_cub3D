@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 14:56:55 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/03/21 19:18:10 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/03/22 18:29:19 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	player_funct(t_data *data)
 
 	mlx = data->game->mlx_ptr;
 	win = data->game->win_ptr;
-	y = 0;
-	while (y < data->map->height)
+		y = data->map->height - 1;
+	while (y > -1)
 	{
 		x = 0;
 		while (x < data->map->width)
@@ -35,8 +35,23 @@ int	player_funct(t_data *data)
 				mlx_put_image_to_window(mlx, win, data->game->wall_tile, x * 60, y * 60);
 			x++;
 		}
-		y++;
+		y--;
 	}
+	// y = 0;
+	// while (y < data->map->height)
+	// {
+	// 	x = 0;
+	// 	while (x < data->map->width)
+	// 	{
+	// 		code = data->map->map[y][x];
+	// 		if (code == '0' || code == 'N' || code == 'W' || code == 'E' || code == 'S')
+	// 			mlx_put_image_to_window(mlx, win, data->game->floor_tile, x * 60, y * 60);
+	// 		if (code == '1')
+	// 			mlx_put_image_to_window(mlx, win, data->game->wall_tile, x * 60, y * 60);
+	// 		x++;
+	// 	}
+	// 	y++;
+	// }
 	y = 0;
 	while (y < 5)
 	{
@@ -145,6 +160,6 @@ void 	init_window(t_data *data)
 void	init_game(t_data *data)
 {
 	init_window(data);
-	get_view_points(data->player);
+	get_view_points(data);
 	display_game(data);
 }
